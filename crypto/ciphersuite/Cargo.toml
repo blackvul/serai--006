@@ -1,0 +1,56 @@
+[package]
+name = "ciphersuite"
+version = "0.4.2"
+description = "Ciphersuites built around ff/group"
+license = "MIT"
+repository = "https://github.com/serai-dex/serai/tree/develop/crypto/ciphersuite"
+authors = ["Luke Parker <lukeparker5132@gmail.com>"]
+keywords = ["ciphersuite", "ff", "group"]
+edition = "2021"
+rust-version = "1.66"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[lints]
+workspace = true
+
+[dependencies]
+std-shims = { path = "../../common/std-shims", version = "^0.1.1", default-features = false, optional = true }
+
+rand_core = { version = "0.6", default-features = false }
+
+zeroize = { version = "^1.5", default-features = false, features = ["derive"] }
+subtle = { version = "^2.4", default-features = false }
+
+digest = { version = "0.10", default-features = false, features = ["core-api"] }
+transcript = { package = "flexible-transcript", path = "../transcript", version = "^0.3.2", default-features = false }
+
+ff = { version = "0.13", default-features = false, features = ["bits"] }
+group = { version = "0.13", default-features = false }
+
+[dev-dependencies]
+hex = { version = "0.4", default-features = false, features = ["std"] }
+
+rand_core = { version = "0.6", default-features = false, features = ["std"] }
+
+ff-group-tests = { version = "0.13", path = "../ff-group-tests" }
+
+[features]
+alloc = ["std-shims", "ff/alloc"]
+std = [
+  "std-shims/std",
+
+  "rand_core/std",
+
+  "zeroize/std",
+  "subtle/std",
+
+  "digest/std",
+  "transcript/std",
+
+  "ff/std",
+]
+
+default = ["std"]
